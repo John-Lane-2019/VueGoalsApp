@@ -1,5 +1,4 @@
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,7 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
     <link rel="stylesheet" type="text/css" href="./css/index.css">
 </head>
-
 <body>
     <div id="vueGoalApp">
         <nav class="navbar is-white topNav">
@@ -36,12 +34,28 @@
         <section class="container">
             <div class="columns">
                 <div class="column is-3">
-                    <a class="button is-primary is-block is-alt is-large" href="#">New Activity</a>
+                    <a @click="toggleNewActivity" class="button is-primary is-block is-alt is-large" href="#">New Activity</a>
+                    <div v-if="isFormDisplayed" class="create-form">
+                        <h2>Create Activity</h2>
+                        <form>
+                          <div class="field">
+                            <label class="label">Title</label>
+                            <div class="control">
+                              <input v-model="newActivity.title" class="input" type="text" placeholder="Read a Book">
+                            </div>
+                          </div>
+                          <div class="field is-grouped">
+                            <div class="control">
+                              <button class="button is-link">Create Activity</button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
                 </div>
                 <div class="column is-9">
                     <div class="box content">
-                        <article class="post" v-for="goal in goals">
-                            <h4>{{goal.title}}</h4>
+                        <article class="post" v-for="activity in activities">
+                            <h4>{{activity.title}}</h4>
                             <div class="media">
                                 <div class="media-left">
                                     <p class="image is-32x32">
@@ -51,7 +65,7 @@
                                 <div class="media-content">
                                     <div class="content">
                                         <p>
-                                            <a href="#">Filip Jerga</a> Updated {{goal.updatedAt}} minutes ago &nbsp;
+                                            <a href="#">Filip Jerga</a> Updated {{activity.updatedAt}} minutes ago &nbsp;
                                         </p>
                                     </div>
                                 </div>
@@ -70,15 +84,19 @@
         const app = new Vue({
             el: '#vueGoalApp',
             data: {
+                isFormDisplayed: false,
                 message: 'Hello Vue!',
                 titleMessage: 'Title Message Vue!!!!!',
                 isTextDisplayed: true,
+                newActivity: {
+                    title: ''
+                },
                 items: {1: {name: 'Filip'}, 2: {name:'Cleetus'}},
                 user: {
                     name: 'Filip Jerga',
                     id: '-Aj34jknvncx98812',
                 },
-                goals: {
+                activities: {
                     '1546968934': {
                         title: 'Learn Vue.js',
                         notes: 'I started today and it was not good.',
@@ -104,6 +122,9 @@
             methods: {
                 toggleTextDisplayed(){
                    this.isTextDisplayed = !this.isTextDisplayed
+                },
+                toggleNewActivity(){
+                    this.isFormDisplayed = !this.isFormDisplayed
                 }
             }
         })
