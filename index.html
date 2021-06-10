@@ -34,7 +34,7 @@
         <section class="container">
             <div class="columns">
                 <div class="column is-3">
-                    <a @click="toggleNewActivity" class="button is-primary is-block is-alt is-large" href="#">New Activity</a>
+                    <a v-if="!isFormDisplayed" @click="toggleFormDisplay" class="button is-primary is-block is-alt is-large" href="#">New Activity</a>
                     <div v-if="isFormDisplayed" class="create-form">
                         <h2>Create Activity</h2>
                         <form>
@@ -44,9 +44,18 @@
                               <input v-model="newActivity.title" class="input" type="text" placeholder="Read a Book">
                             </div>
                           </div>
+                          <div class="field">
+                            <label class="label">Notes</label>
+                            <div class="control">
+                              <textarea v-model="newActivity.notes" class="textarea" placeholder="Textarea"></textarea>
+                            </div>
+                          </div>
                           <div class="field is-grouped">
                             <div class="control">
                               <button class="button is-link">Create Activity</button>
+                            </div>
+                            <div class="control">
+                                <button @click="toggleFormDisplay"class="button is-text">Cancel</button>
                             </div>
                           </div>
                         </form>
@@ -73,7 +82,8 @@
                 titleMessage: 'Title Message Vue!!!!!',
                 isTextDisplayed: true,
                 newActivity: {
-                    title: ''
+                    title: 'Your title here',
+                    notes: 'Your notes here'
                 },
                 items: {1: {name: 'Filip'}, 2: {name:'Cleetus'}},
                 user: {
@@ -109,7 +119,7 @@
                 toggleTextDisplayed(){
                    this.isTextDisplayed = !this.isTextDisplayed
                 },
-                toggleNewActivity(){
+                toggleFormDisplay(){
                     this.isFormDisplayed = !this.isFormDisplayed
                 }
             }
